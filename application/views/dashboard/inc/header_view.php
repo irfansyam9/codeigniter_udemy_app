@@ -7,6 +7,15 @@
 
     <script type="text/javascript" src="<?=base_url()?>public/js/jquery.js"></script>
     <script type="text/javascript" src="<?=base_url()?>public/js/bootstrap.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>public/js/dashboard/result.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>public/js/dashboard/event.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>public/js/dashboard/template.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>public/js/dashboard.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var dashboard = new Dashboard();
+        });
+    </script>
 </head>
 <body>
 
@@ -30,3 +39,5 @@
 </nav>
 
 <div class="container">
+<div id="error" class="alert alert-danger hidee"></div>
+<div id="success" class="alert alert-success hidee"></div>

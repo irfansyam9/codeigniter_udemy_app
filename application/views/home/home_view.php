@@ -1,5 +1,5 @@
 <div class="row">
-<form id="login_form" role="form" method="post" action="<?=site_url('user/login')?>">
+<form id="login_form" role="form" method="post" action="<?=site_url('api/login')?>">
         <div class="form-group">
             <label for="login">Username</label>
             <input type="text" placeholder="Username" name="login" class="form-control">
@@ -9,9 +9,10 @@
             <input type="password" placeholder="Password" name="password" class="form-control">
         </div>
         <div class="form-group">
-            <input type="submit" value="login" class="btn btn-default">
+            <input type="submit" value="Login" class="btn btn-default">
         </div>
     </form>
+    <a href="<?=site_url('home/register')?>">Register</a>
 </div>
 
 

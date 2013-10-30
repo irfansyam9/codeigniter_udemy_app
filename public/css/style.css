@@ -1,3 +1,7 @@
+.hidee {
+    display: none;
+}
+
 footer {
     background: #AAA;
     margin: 30px 0;
