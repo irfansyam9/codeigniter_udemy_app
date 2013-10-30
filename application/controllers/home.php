@@ -9,6 +9,14 @@ class Home extends CI_Controller
         $this->load->view('home/inc/footer_view');
     }
 
+    /* public function code() */
+    /* { */
+        /* $this->load->library('encrypt'); */
+        /* echo $this->encrypt->encode('My Secret Password'); */
+        /* echo $this->encrypt->decode('ENCODED_PASSWORD'); */
+        /* echo hash('sha256', 'My Secret Password' . SALT); */
+    /* } */
+
     /* public function test() */
     /* { */
         /* $this->db->where(array('user_id' => 1)); */

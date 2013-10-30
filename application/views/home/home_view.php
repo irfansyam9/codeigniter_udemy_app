@@ -1,5 +1,5 @@
 <div class="row">
-    <form role="form" method="post" action="">
+<form id="login_form" role="form" method="post" action="<?=site_url('user/login')?>">
         <div class="form-group">
             <label for="login">Username</label>
             <input type="text" placeholder="Username" name="login" class="form-control">
@@ -13,3 +13,23 @@
         </div>
     </form>
 </div>
+
+
+<script type="text/javascript">
+$(function(){
+    $('#login_form').submit(function(e) {
+        e.preventDefault();
+        var url = $(this).attr('action'),
+            postData = $(this).serialize();
+
+        $.post(url, postData, function(o) {
+            if (o.result == 1) {
+                window.location.href = '<?=site_url('dashboard')?>';
+            }
+            else {
+                alert('Invalid Login');
+            }
+        }, 'json')
+    });
+});
+</script>
