@@ -84,9 +84,24 @@ class Api extends CI_Controller
 
     // ------------------------------------------------------------------------
 
-    public function get_todo()
+    public function get_todo($id = null)
     {
         $this->_require_login();
+
+        if ($id != null) {
+            $this->db->where(array(
+                'todo_id' => $id,
+                'user_id' => $this->session->userdata('user_id')
+            ));
+        }
+        else {
+            $this->db->where('user_id', $this->session->userdata('user_id'));
+        }
+
+        $q = $this->db->get('todo');
+        $result = $q->result();
+
+        $this->output->set_output(json_encode($result));
     }
 
     // ------------------------------------------------------------------------
@@ -112,7 +127,13 @@ class Api extends CI_Controller
         ));
 
         if ($result) {
-            $this->output->set_output(json_encode(array('result' => 1)));
+            // Get newest entry for dom
+            $q = $this->db->get_where('todo', array('todo_id' => $this->db->insert_id()));
+
+            $this->output->set_output(json_encode(array(
+                'result' => 1,
+                'data' => $q->result()
+            )));
             return false;
         }
 
@@ -127,7 +148,24 @@ class Api extends CI_Controller
     public function update_todo()
     {
         $this->_require_login();
+
         $todo_id = $this->input->post('todo_id');
+        $completed = $this->input->post('completed');
+
+        $this->db->where(array('todo_id' => $todo_id));
+        $this->db->update('todo', array(
+            'completed' => $completed
+        ));
+
+        $result = $this->db->affected_rows();
+
+        if ($result >= 0) {
+            $this->output->set_output(json_encode(array('result' => 1)));
+            return false;
+        }
+
+        $this->output->set_output(json_encode(array('result' => 0)));
+        return false;
     }
 
     // ------------------------------------------------------------------------
@@ -135,7 +173,21 @@ class Api extends CI_Controller
     public function delete_todo()
     {
         $this->_require_login();
-        $todo_id = $this->input->post('todo_id');
+
+        $this->db->delete('todo', array(
+            'todo_id' => $this->input->post('todo_id'),
+            'user_id' => $this->session->userdata('user_id')
+        ));
+
+        if ($this->db->affected_rows() > 0) {
+            $this->output->set_output(json_encode(array('result' => 1)));
+            return false;
+        }
+
+        $this->output->set_output(json_encode(array(
+            'result' => 0,
+            'message' => 'Could not delete'
+        )));
     }
 
     // ------------------------------------------------------------------------

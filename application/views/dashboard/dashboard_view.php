@@ -9,6 +9,7 @@
                 <input type="submit" value="Add Todo" class="btn btn-default">
             </div>
         </form>
+        <div id="list_todo"></div>
     </div>
     <div id="dashboard-main" class="col-md-8">
         <h2>Notes</h2>
@@ -23,5 +24,6 @@
                 <input type="submit" value="Add Note" class="btn btn-default">
             </div>
         </form>
+        <div id="list_notes"></div>
     </div>
 </div>
