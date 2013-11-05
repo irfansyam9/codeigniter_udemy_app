@@ -6,11 +6,23 @@ class Test extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('user_model');
+
+        $result = $this->user_model->get();
+        /* $result = $this->user_model->insert(array('login' => 'Markus')); */
+        /* $result = $this->user_model->delete(array('login' => 'Markus')); */
+        /* $result = $this->user_model->update(array('password' => 'Test'), array('login' => 'Markus')); */
+        /* $result = $this->user_model->insertUpdate(array( */
+        /*     'login' => 'Donny' */
+        /* ), 6); */
+
+        echo '<pre>';
+        print_r($result);
     }
 
     public function test_get()
     {
-        $data = $this->user_model->get(8);
+        $data = $this->user_model->get();
         print_r($data);
     }
 

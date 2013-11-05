@@ -8,6 +8,9 @@ class Api extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('user_model');
+        $this->load->model('todo_model');
+        $this->load->model('note_model');
     }
 
     // ------------------------------------------------------------------------
@@ -29,7 +32,6 @@ class Api extends CI_Controller
         $login = $this->input->post('login');
         $password = $this->input->post('password');
 
-        $this->load->model('user_model');
         $result = $this->user_model->get(array(
             'login' => $login,
             'password' => hash('sha256', $password . SALT)
@@ -65,7 +67,6 @@ class Api extends CI_Controller
         $password = $this->input->post('password');
         $confirm_password = $this->input->post('confirm_password');
 
-        $this->load->model('user_model');
         $user_id = $this->user_model->insert(array(
             'login' => $login,
             'password' => hash('sha256', $password . SALT),
@@ -89,17 +90,16 @@ class Api extends CI_Controller
         $this->_require_login();
 
         if ($id != null) {
-            $this->db->where(array(
+            $result = $this->todo_model->get(array(
                 'todo_id' => $id,
                 'user_id' => $this->session->userdata('user_id')
             ));
         }
         else {
-            $this->db->where('user_id', $this->session->userdata('user_id'));
+            $result = $this->todo_model->get(array(
+                'user_id' => $this->session->userdata('user_id')
+            ));
         }
-
-        $q = $this->db->get('todo');
-        $result = $q->result();
 
         $this->output->set_output(json_encode($result));
     }
@@ -121,18 +121,17 @@ class Api extends CI_Controller
             return false;
         }
 
-        $result = $this->db->insert('todo', array(
+        $result = $this->todo_model->insert(array(
             'content' => $this->input->post('content'),
             'user_id' => $this->session->userdata('user_id')
         ));
 
         if ($result) {
             // Get newest entry for dom
-            $q = $this->db->get_where('todo', array('todo_id' => $this->db->insert_id()));
 
             $this->output->set_output(json_encode(array(
                 'result' => 1,
-                'data' => $q->result()
+                'data' => $result
             )));
             return false;
         }
