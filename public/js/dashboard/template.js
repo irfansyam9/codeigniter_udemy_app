@@ -1,6 +1,5 @@
 var Template = function() {
     this.__construct = function() {
-        console.log('Template Created');
     }
 
     this.todo = function(obj) {

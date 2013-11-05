@@ -1,6 +1,5 @@
 var Event = function() {
     this.__construct = function() {
-        console.log('Event Created');
         create_todo();
         create_note();
         update_todo();

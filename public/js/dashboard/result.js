@@ -1,6 +1,5 @@
 var Result = function() {
     this.__construct = function() {
-        console.log('Result Created');
     }
 
     this.success = function(msg) {

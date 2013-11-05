@@ -151,12 +151,9 @@ class Api extends CI_Controller
         $todo_id = $this->input->post('todo_id');
         $completed = $this->input->post('completed');
 
-        $this->db->where(array('todo_id' => $todo_id));
-        $this->db->update('todo', array(
+        $result = $this->todo_model->update(array(
             'completed' => $completed
-        ));
-
-        $result = $this->db->affected_rows();
+        ), $todo_id);
 
         if ($result >= 0) {
             $this->output->set_output(json_encode(array('result' => 1)));
@@ -173,12 +170,12 @@ class Api extends CI_Controller
     {
         $this->_require_login();
 
-        $this->db->delete('todo', array(
+        $result = $this->todo_model->delete(array(
             'todo_id' => $this->input->post('todo_id'),
             'user_id' => $this->session->userdata('user_id')
         ));
 
-        if ($this->db->affected_rows() > 0) {
+        if ($result) {
             $this->output->set_output(json_encode(array('result' => 1)));
             return false;
         }
