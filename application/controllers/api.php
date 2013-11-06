@@ -128,10 +128,9 @@ class Api extends CI_Controller
 
         if ($result) {
             // Get newest entry for dom
-
             $this->output->set_output(json_encode(array(
                 'result' => 1,
-                'data' => $result
+                'data' => $this->todo_model->get($result)
             )));
             return false;
         }
@@ -188,9 +187,23 @@ class Api extends CI_Controller
 
     // ------------------------------------------------------------------------
 
-    public function get_note()
+    public function get_note($id = null)
     {
         $this->_require_login();
+
+        if ($id != null) {
+            $result = $this->note_model->get(array(
+                'note_id' => $id,
+                'user_id' => $this->session->userdata('user_id')
+            ));
+        }
+        else {
+            $result = $this->note_model->get(array(
+                'user_id' => $this->session->userdata('user_id')
+            ));
+        }
+
+        $this->output->set_output(json_encode($result));
     }
 
     // ------------------------------------------------------------------------
@@ -198,6 +211,38 @@ class Api extends CI_Controller
     public function create_note()
     {
         $this->_require_login();
+
+        $this->form_validation->set_rules('title', 'Title', 'required|max_length[50]');
+        $this->form_validation->set_rules('content', 'Content', 'required|max_length[500]');
+
+        if ($this->form_validation->run() == false) {
+            $this->output->set_output(json_encode(array(
+                'result' => 0,
+                'error' => $this->form_validation->error_array()
+            )));
+
+            return false;
+        }
+
+        $result = $this->note_model->insert(array(
+            'title' => $this->input->post('title'),
+            'content' => $this->input->post('content'),
+            'user_id' => $this->session->userdata('user_id')
+        ));
+
+        if ($result) {
+            // Get newest entry for dom
+            $this->output->set_output(json_encode(array(
+                'result' => 1,
+                'data' => $this->note_model->get($result)
+            )));
+            return false;
+        }
+
+        $this->output->set_output(json_encode(array(
+            'result' => 0,
+            'error' => 'Could not insert record'
+        )));
     }
 
     // ------------------------------------------------------------------------
@@ -205,7 +250,21 @@ class Api extends CI_Controller
     public function update_note()
     {
         $this->_require_login();
+
         $note_id = $this->input->post('note_id');
+
+        $result = $this->note_model->update(array(
+            'title' => $this->input->post('title'),
+            'content' => $this->input->post('content')
+        ), $note_id);
+
+        if ($result >= 0) {
+            $this->output->set_output(json_encode(array('result' => 1)));
+            return false;
+        }
+
+        $this->output->set_output(json_encode(array('result' => 0)));
+        return false;
     }
 
     // ------------------------------------------------------------------------
@@ -213,7 +272,21 @@ class Api extends CI_Controller
     public function delete_note()
     {
         $this->_require_login();
-        $note_id = $this->input->post('note_id');
+
+        $result = $this->note_model->delete(array(
+            'note_id' => $this->input->post('note_id'),
+            'user_id' => $this->session->userdata('user_id')
+        ));
+
+        if ($result) {
+            $this->output->set_output(json_encode(array('result' => 1)));
+            return false;
+        }
+
+        $this->output->set_output(json_encode(array(
+            'result' => 0,
+            'message' => 'Could not delete'
+        )));
     }
 }
 

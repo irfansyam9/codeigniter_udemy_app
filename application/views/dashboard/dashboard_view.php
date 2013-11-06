@@ -9,13 +9,13 @@
                 <input type="submit" value="Add Todo" class="btn btn-default">
             </div>
         </form>
-        <div id="list_todo"></div>
+        <div id="list_todo"><div class="ajax_loader"></div></div>
     </div>
     <div id="dashboard-main" class="col-md-8">
         <h2>Notes</h2>
         <form id="create_note" role="form" method="post" action="<?=site_url('api/create_note')?>">
             <div class="form-group">
-                <input type="text" placeholder="Title" name="content" class="form-control">
+                <input type="text" placeholder="Title" name="title" class="form-control">
             </div>
             <div class="form-group">
                 <input type="text" placeholder="Content" name="content" class="form-control">
@@ -24,6 +24,6 @@
                 <input type="submit" value="Add Note" class="btn btn-default">
             </div>
         </form>
-        <div id="list_notes"></div>
+        <div id="list_notes"><div class="ajax_loader"></div></div>
     </div>
 </div>

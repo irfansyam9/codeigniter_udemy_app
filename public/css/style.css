@@ -6,6 +6,15 @@
     color: #b3b3b3;
 }
 
+.ajax_loader, .ajax_loader_gray {
+    background: url('../img/ajax-loader-white.gif');
+    height: 16px;
+    width: 16px;
+}
+.ajax_loader_gray {
+    background: url('../img/ajax-loader-gray.gif');
+}
+
 footer {
     background: #AAA;
     margin: 30px 0;
