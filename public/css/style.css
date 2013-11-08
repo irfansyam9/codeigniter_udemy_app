@@ -15,6 +15,31 @@
     background: url('../img/ajax-loader-gray.gif');
 }
 
+#list_todo span.content {
+    display: inline-block;
+    width: 210px;
+}
+
+#list_todo div {
+    padding: 5px;
+}
+
+#list_todo div:hover {
+    background: rgba(0, 0, 0, .1);
+}
+
+#list_notes div {
+    padding: 5px;
+}
+
+#list_notes div:hover {
+    background: rgba(0, 0, 0, .1);
+}
+
+.options a {
+    padding-left: 5px;
+}
+
 footer {
     background: #AAA;
     margin: 30px 0;

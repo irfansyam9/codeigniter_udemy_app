@@ -10,11 +10,13 @@ var Template = function() {
         else {
             output += '<div id="todo_' + obj.todo_id + '">';
         }
-        output += '<span>' + obj.content + '</span> ';
+        output += '<span class="content">' + obj.content + '</span> ';
         var data_completed = (obj.completed == 1) ? 0 : 1;
         var data_completed_text = (obj.completed == 1) ? '<span class="glyphicon glyphicon-ok-circle"></span>' : '<span class="glyphicon glyphicon-ok-sign"></span>';
+        output += '<span class="options pull-right">';
         output += '<a class="todo_update" data-id="' + obj.todo_id + '" data-completed="' + data_completed + '" href="api/update_todo">' + data_completed_text + '</a>';
         output += '<a class="todo_delete" data-id="' + obj.todo_id + '" href="api/delete_todo/"><span class="glyphicon glyphicon-remove"></span></a>';
+        output += '</span>';
         output += '</div>';
         return output;
     };
@@ -23,8 +25,10 @@ var Template = function() {
         var output = '';
         output += '<div id="note_' + obj.note_id +'">';
         output += '<a class="note_toggle" data-id="' + obj.note_id + '" id="note_title_' + obj.note_id +'" href="#">' + obj.title + '</a> ';
+        output += '<span class="options pull-right">';
         output += '<a class="note_update_display" data-id="' + obj.note_id + '" href="#">Edit</a>';
         output += '<a class="note_delete" data-id="' + obj.note_id + '" href="api/delete_note/"><span class="glyphicon glyphicon-remove"></span></a>';
+        output += '</span>';
         output += '<div class="note_edit_container" id="note_edit_container_' + obj.note_id + '"></div>';
         output += '<div class="hide" id="note_content_' + obj.note_id +'">' + obj.content + '</div>';
         output += '</div>';

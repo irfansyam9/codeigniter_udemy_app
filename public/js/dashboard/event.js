@@ -66,12 +66,12 @@ var Event = function() {
             $.post(url, postData, function(o) {
                 if (o.result == 1) {
                     if (postData.completed == 1) {
-                        self.parent('div').addClass('todo_complete');
+                        $('#todo_' + postData.todo_id).addClass('todo_complete');
                         self.html('<span class="glyphicon glyphicon-ok-circle"></span>');
                         self.data('completed', 0);
                     }
                     else {
-                        self.parent('div').removeClass('todo_complete');
+                        $('#todo_' + postData.todo_id).removeClass('todo_complete');
                         self.html('<span class="glyphicon glyphicon-ok-sign"></span>');
                         self.data('completed', 1);
                     }
